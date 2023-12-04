@@ -117,3 +117,70 @@ You can make script on package.json for migrations and view table ui
     "db:studio":"npx prisma studio"
   },
 ```
+
+## Prisma - ORM
+
+- we must generate client to connect js-><prisma>->db
+
+```bash
+npx prisma generate
+```
+
+- make folder and file "/src/utils/prisma.js"
+  we paste code from terminal after generating with command above
+
+"prisma.js"
+
+```bash
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+```
+
+# Examples code
+
+```bash
+
+import { prisma } from "@/utils/prisma";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  try {
+    // prisma.model.method
+    const allNotes = await prisma.notes.findMany();
+    return NextResponse.json(
+      { data: allNotes, message: "fetch data success!" },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error, meesage: "fetch data error!" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(req) {
+  const { content, user, title } = await req.json();
+
+  try {
+    const createNote = await prisma.notes.create({
+      data: {
+        title,
+        content,
+        user,
+      },
+    });
+
+    return NextResponse.json(
+      { data: createNote, message: "success create note" },
+      { status: 201 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error, message: "Failed to create note" },
+      { status: 500 }
+    );
+  }
+}
+
+```
