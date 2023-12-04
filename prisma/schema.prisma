@@ -12,7 +12,7 @@ datasource db {
 
 
 model Notes {
-  id Int @id
+  id Int @id @default(autoincrement())
   content String
   title String
   user String
