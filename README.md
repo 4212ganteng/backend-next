@@ -29,8 +29,91 @@ export async function POST(req) {
 
 ```
 
-## Deploy on Vercel
+## Working with prisma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Install package
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+npm i prisma @prisma/client
+```
+
+Generate prisma file
+
+```bash
+npx prisma init
+```
+
+run local migration (sqlite)
+
+```bash
+npx prisma migrate dev
+```
+
+# OR
+
+run DB migration (PostgreeSQL,mySQL)
+
+```bash
+npx prisma db push
+```
+
+## example setup Working with prisma (sqlite)
+
+sqlite is db type files not server but we can embeded in to project
+
+- make db file for sqlite (prisma/dev.db)
+- change data source on schema.prisma (datasource db {
+  provider = "sqlite" ==> db engine
+  url = "file:./dev.db" ==> path file db
+  })
+
+make model on /prisma/schema.prisma
+
+# Structure Model
+
+```bash
+model nameTable {
+nameField TypeData <optional>
+nameField TypeData <optional>
+nameField TypeData <optional>
+}
+```
+
+# Example Model
+
+```bash
+model Notes {
+  id Int @id
+  content String
+  user String
+  createdAt DateTime @default(now())
+
+}
+```
+
+- run migration
+
+```bash
+npx prisma migrate dev
+```
+
+to view migration and table ui, run this comand.
+
+```bash
+npx prisma studio
+```
+
+# Tips :
+
+You can make script on package.json for migrations and view table ui
+
+```bash
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:migrate":"npx prisma migrate dev --name dev",
+    "db:studio":"npx prisma studio"
+  },
+```
