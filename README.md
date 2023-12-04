@@ -2,16 +2,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, make folder "api" in the src/app folder
+this is make a route an api
+
+Structure folder like this:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+src/api/notes->route.js
+
+route.js is naming convetion so we must following with writing name file "route.js"
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
